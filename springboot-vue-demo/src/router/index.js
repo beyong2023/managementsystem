@@ -1,16 +1,34 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import {createRouter, createWebHistory} from 'vue-router'
+import Layout from '../layout/Layout.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'Layout',
+    redirect: '/home',
+    component: Layout,
+    children: [
+      {
+        path: 'home',
+        name: 'Home',
+        component: () => import("@/views/Home")
+      }
+    ]
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import("@/views/Login")
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: () => import("@/views/Register")
   },
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(process.env.BASEPATH),
   routes
 })
 
